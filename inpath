@@ -1,0 +1,68 @@
+#!/bin/bash
+# inpath--Verifies that a specified program is either valid as is 
+# or can be found in the PATH directory list
+
+# set -x
+
+in_path()
+{
+   #Given a command and PATH, tries to find the command. Returns 0 if
+   # found and exectable; 1 if not. Note that this temporarily modifies 
+   # the IFS (internal field separator) but restores it upon completion.
+
+   cmd=$1        ourpath=$2     result=1
+   oldIFS=$IFS   IFS=':'
+
+   for directory in $ourpath
+   do
+     echo "directory is $directory"
+     if [ -x $directory/$cmd ] ; then 
+         result=0 #If here, we found the command ($cmd in directory)
+     fi
+   done
+
+   IFS=$oldIFS
+   return $result
+}
+
+checkForCmdInPath()
+{
+   var=$1
+   echo "var is $var"
+
+   if [ "$var" != "" ] ; then     #check if $var is not empty
+       if [ "${var:0:1}" = "/" ] ; then  
+       #check if $var begins with a '/'                                           
+       #in case it begins, we are dealing                                         
+       #with a full file path                                                     
+       #(e.g./bin/echo) 
+           if [ ! -x $var ] ; then #check if $var is executable
+               return 1
+           fi
+       elif ! in_path $var "$PATH" ; then
+           return 2
+       fi
+   fi
+}
+
+# if [ $# -ne 1 ]; then
+#   echo "Usage: $0 command" >&2
+#   exit 1
+# fi
+
+# This last code block is used just in case we want 
+# the code above as an independet program. It is to 
+# be deleted when the functions above are included 
+# in the libary function.
+
+echo $1
+echo $2
+echo "we are looking for $1"
+checkForCmdInPath $1
+case $? in
+    0) echo "$1 found in PATH"    ;;
+    1) echo "$1 not found or not executable" ;;
+    2) echo "$1 not found in PATH"  ;;
+esac
+
+exit 0
