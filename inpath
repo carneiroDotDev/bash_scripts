@@ -55,14 +55,12 @@ checkForCmdInPath()
 # be deleted when the functions above are included 
 # in the libary function.
 
-echo $1
-echo $2
-echo "we are looking for $1"
-checkForCmdInPath $1
-case $? in
-    0) echo "$1 found in PATH"    ;;
-    1) echo "$1 not found or not executable" ;;
-    2) echo "$1 not found in PATH"  ;;
-esac
+#echo "we are looking for $1"
+#checkForCmdInPath $1
+#case $? in
+#    0) echo "$1 found in PATH"    ;;
+#    1) echo "$1 not found or not executable" ;;
+#    2) echo "$1 not found in PATH"  ;;
+#esac
 
 exit 0
