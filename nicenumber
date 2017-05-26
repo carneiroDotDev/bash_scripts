@@ -71,3 +71,12 @@ fi
 
 nicenumber $1 1 # Second arg forces nicenumber to 'echo' output
 exit 0
+
+#Notes about the script
+# The constructor ${DD:= '.'} will use the DD if its set 
+#                                 :=   -> Otherwise assign 
+#                             will assign to DD the value '.'
+#
+# A similar constructor (and which would also be useful here) is
+# ${DD:- '.'} will use DD if its set otherwise use '.' 
+#  (without setting values for variables)
