@@ -41,7 +41,7 @@ if [ $3 -le 999 ] ; then
 fi
 
 
-# Is the month input format a number?
+## Is the month input format a number?
 if [ -z $(echo $1|sed 's/[[:digit:]]//g') ]; then 
     monthNumToName $1
 else 
